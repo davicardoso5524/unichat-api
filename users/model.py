@@ -1,31 +1,27 @@
-from sqlalchemy import String 
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from datetime import datetime
+
+from sqlalchemy import BigInteger, DateTime, Enum, String, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
+
 
 class User(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(
-        primary_key=True,
-        autoincrement=True
-    )
-
-    name: Mapped[str] = mapped_column(
-        String(100),
-    )
-
-    email: Mapped[str] = mapped_column(
-        String(150),
-        unique=True
-    )
-
-    password_hash: Mapped[str] = mapped_column(
-        String(255)
-    )
-
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(150), nullable=False)
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     role: Mapped[str] = mapped_column(
-        String(50),
-        default="student"
+        Enum("student", "professor", name="user_role"),
+        nullable=False,
     )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=False),
+        server_default=func.current_timestamp(),
+        nullable=False,
+    )
+
+    sent_messages = relationship("Message", back_populates="sender")
+    chats = relationship("Chat", secondary="chat_participants", back_populates="participants")
