@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, ForeignKey
+from sqlalchemy import Integer, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from database.base import Base
@@ -8,12 +8,12 @@ class ChatParticipant(Base):
     __tablename__ = "chat_participants"
 
     chat_id: Mapped[int] = mapped_column(
-        BigInteger,
+        Integer,
         ForeignKey("chats.id", ondelete="CASCADE"),
         primary_key=True,
     )
     user_id: Mapped[int] = mapped_column(
-        BigInteger,
+        Integer,
         ForeignKey("users.id", ondelete="CASCADE"),
         primary_key=True,
     )

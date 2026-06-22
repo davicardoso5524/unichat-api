@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import BigInteger, DateTime, func
+from sqlalchemy import Integer, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
@@ -9,7 +9,7 @@ from database.base import Base
 class Chat(Base):
     __tablename__ = "chats"
 
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=False),
         server_default=func.current_timestamp(),

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import BigInteger, DateTime, ForeignKey, String, Text, func
+from sqlalchemy import Integer, DateTime, ForeignKey, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
@@ -9,15 +9,15 @@ from database.base import Base
 class Message(Base):
     __tablename__ = "messages"
 
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     chat_id: Mapped[int] = mapped_column(
-        BigInteger,
+        Integer,
         ForeignKey("chats.id", ondelete="CASCADE"),
         index=True,
         nullable=False,
     )
     sender_id: Mapped[int] = mapped_column(
-        BigInteger,
+        Integer,
         ForeignKey("users.id", ondelete="CASCADE"),
         index=True,
         nullable=False,

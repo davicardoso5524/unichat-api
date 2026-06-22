@@ -4,6 +4,9 @@ from database.connection import engine
 from database.base import Base
 
 from users.model import User
+from chats.model import Chat
+from messages.model import Message
+from chat_participants.model import ChatParticipant
 
 Base.metadata.create_all(bind=engine)
 
